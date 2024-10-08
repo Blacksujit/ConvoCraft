@@ -8,12 +8,13 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import os
 from dotenv import load_dotenv
 
-
 # Load the environment variables from .env
 load_dotenv()
 
+
 # Get the bot token from the environment variable
 token = os.getenv("DISCORD_BOT_TOKEN")
+
 
 if token is None:
     raise ValueError("Bot token not found. Please set the DISCORD_BOT_TOKEN environment variable.")
