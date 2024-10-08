@@ -5,10 +5,12 @@ import aiohttp
 import discord
 from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+import os
+
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 
-# MISTRAL_API_KEY = 'rcjyxkrX6tJXRQdlGv8K6KI4Oa3Ol6OA'
-DISCORD_TOKEN = 'MTI5MzIyODM2MzQ5MzkzNzI2NA.GdmReZ.8uAnP5RFw9xIJAyW145dXsI4G7UW0wPLhEfCCg'
+ 
 
 # Rate limiting variables
 last_request_time = 0
@@ -105,7 +107,7 @@ import aiohttp
 from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
-DISCORD_TOKEN = 'YOUR_DISCORD_BOT_TOKEN'
+ 
 
 # Load the Hugging Face GPT model and tokenizer
 model_name = "gpt2"  # You can use any other GPT model from Hugging Face
