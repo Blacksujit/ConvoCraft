@@ -6,11 +6,14 @@ import discord
 from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import os
+# Load the environment variables from .env
+load_dotenv()
 
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+# Get the bot token from the environment variable
+token = os.getenv("DISCORD_BOT_TOKEN")
 
-
- 
+if token is None:
+    raise ValueError("Bot token not found. Please set the DISCORD_BOT_TOKEN environment variable.")
 
 # Rate limiting variables
 last_request_time = 0

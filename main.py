@@ -1,10 +1,12 @@
 import discord
 import os
 
-# Get the bot token from the environment variable (or you can hardcode it for testing)
+# Load the environment variables from .env
+load_dotenv()
+
+# Get the bot token from the environment variable
 token = os.getenv("DISCORD_BOT_TOKEN")
 
-# Ensure you have the correct token
 if token is None:
     raise ValueError("Bot token not found. Please set the DISCORD_BOT_TOKEN environment variable.")
 
