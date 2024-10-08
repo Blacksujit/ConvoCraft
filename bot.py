@@ -6,6 +6,9 @@ import discord
 from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import os
+from dotenv import load_dotenv
+
+
 # Load the environment variables from .env
 load_dotenv()
 
