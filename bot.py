@@ -157,4 +157,4 @@ async def chat(ctx, *, prompt: str):
     await ctx.send(response)
 
 # Run the bot
-bot.run(DISCORD_TOKEN)
+bot.run(token)
