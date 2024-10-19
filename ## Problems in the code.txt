@@ -1,8 +1,0 @@
-## Problems in the code 
-
-1.) cuda , import errors , persisting errors , Two modules , numba
-
-
-Referances Taken :
-
-1. stackoverflow
