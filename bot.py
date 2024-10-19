@@ -5,19 +5,10 @@ import aiohttp
 import discord
 from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
-import os
-from dotenv import load_dotenv
-
-# Load the environment variables from .env
-load_dotenv()
 
 
-# Get the bot token from the environment variable
-token = os.getenv("DISCORD_BOT_TOKEN")
-
-
-if token is None:
-    raise ValueError("Bot token not found. Please set the DISCORD_BOT_TOKEN environment variable.")
+# MISTRAL_API_KEY = 'rcjyxkrX6tJXRQdlGv8K6KI4Oa3Ol6OA'
+DISCORD_TOKEN = 'your_bot_token_to_discord'
 
 # Rate limiting variables
 last_request_time = 0
@@ -114,7 +105,7 @@ import aiohttp
 from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
- 
+DISCORD_TOKEN = 'YOUR_DISCORD_BOT_TOKEN'
 
 # Load the Hugging Face GPT model and tokenizer
 model_name = "gpt2"  # You can use any other GPT model from Hugging Face
@@ -158,4 +149,4 @@ async def chat(ctx, *, prompt: str):
     await ctx.send(response)
 
 # Run the bot
-bot.run(token)
+bot.run(DISCORD_TOKEN)
