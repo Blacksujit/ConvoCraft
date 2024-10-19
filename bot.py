@@ -7,7 +7,7 @@ from discord.ext import commands
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 
-# MISTRAL_API_KEY = 'rcjyxkrX6tJXRQdlGv8K6KI4Oa3Ol6OA'
+# MISTRAL_API_KEY = ''
 DISCORD_TOKEN = 'your_bot_token_to_discord'
 
 # Rate limiting variables
