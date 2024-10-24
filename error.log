@@ -1,0 +1,2 @@
+C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\auto\auto_factory.py:471: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in v5 of Transformers. Please use `token` instead.
+  warnings.warn(
