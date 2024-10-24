@@ -1,10 +1,11 @@
-# Super Cool Discord Bot
+# Super Cool ConvoCraft
+
 
 ![bot](https://github.com/user-attachments/assets/8e4b3af0-df7e-46ae-93c6-53853b16ec20)
 
 ## Overview:
 
-This Discord bot is a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
+This ConvoCraftis a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
  
 ## Technical Details:
 
@@ -116,3 +117,4 @@ This Discord bot represents a sophisticated blend of various Python libraries an
 For any questions, issues, or feature requests, please refer to the project's issue tracker or contact the maintainers.
 
 Enjoy your Super Cool Discord Bot!
+
