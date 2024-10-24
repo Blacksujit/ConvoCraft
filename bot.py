@@ -300,4 +300,9 @@ except Exception as e:
 # 4. Wikipedia summary command to fetch quick information on various topics.
 # 5. QR code generation command for easy sharing of links or text.
 # 6. Reminder command to set timed reminders for users.
+# The comment `# These additions provide more interactive and useful functionalities for users` is
+# providing a brief summary or explanation of the added fancy features in the Discord bot script. It
+# serves as a quick reference for anyone reading the code to understand the purpose of the new
+# commands and features that have been implemented to enhance the bot's functionality and user
+# experience.
 # These additions provide more interactive and useful functionalities for users.
