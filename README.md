@@ -11,7 +11,7 @@ This Discord bot is a powerful, multi-functional tool designed to enhance your D
 ### Dependencies:
 
 The bot relies on several Python libraries to function:
-- discord.py: For interacting with the Discord API
+- bot.py: For interacting with the Discord API
 - python-dotenv: For loading environment variables
 - matplotlib: For creating visualizations
 - forex-python: For currency conversion
