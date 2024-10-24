@@ -1,5 +1,6 @@
 # Super Cool Convocraft:
-![Discord Bot Banner](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzM3YTM5MzUyMzM0ZmQ1OTg4OWNjYjI5YzM1OTZiNjBjOTRhOTM0ZiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/3oKIPc9VZj4ylzjcys/giphy.gif)
+
+![bot](https://github.com/user-attachments/assets/8e4b3af0-df7e-46ae-93c6-53853b16ec20)
 
 ## Overview:
 
