@@ -146,5 +146,5 @@ This ConvoCraft bot represents a sophisticated blend of various Python libraries
 
 
 
-**Enjoy your Super Cool ConvoCraftBot!**
+**Enjoy your Super Cool ConvoCraft Bot!**
 
