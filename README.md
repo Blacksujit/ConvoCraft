@@ -5,7 +5,7 @@
 
 ## Overview:
 
-This ConvoCraftis a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
+This ConvoCraft is a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
  
 ## Technical Details:
 
