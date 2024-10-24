@@ -138,7 +138,7 @@ The bot includes comprehensive error handling to manage various scenarios, ensur
 
 ## Getting Started:
 
-******Run the below command to start the bot:******
+******Run the below commands to start the bot:******
 
 ***create an `.env` file and add your bot token and hugging face access token:***
 
