@@ -4,7 +4,7 @@
 
 ## Overview:
 
-This Discord bot is a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
+This Covocraft bot is a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
  
 ## Technical Details:
 
