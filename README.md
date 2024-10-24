@@ -107,8 +107,12 @@ TextBlob is employed for sentiment analysis, providing a simple yet effective wa
 The bot includes comprehensive error handling to manage various scenarios, ensuring stability and providing useful feedback.
 
 ## Getting Started
-[Detailed instructions on setting up the bot, including environment setup, token configuration, and deployment steps]
 
+1.) to run the Project :
+
+```
+python bot.py
+```
 ## Conclusion:
 
 This Discord bot represents a sophisticated blend of various Python libraries and APIs, creating a versatile tool that can significantly enhance any Discord server's functionality and user engagement.
