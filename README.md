@@ -1,17 +1,17 @@
-# Super Cool Convocraft:
+# Super Cool Discord Bot
 
 ![bot](https://github.com/user-attachments/assets/8e4b3af0-df7e-46ae-93c6-53853b16ec20)
 
 ## Overview:
 
-This Covocraft bot is a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
+This Discord bot is a powerful, multi-functional tool designed to enhance your Discord server experience. It combines utility, fun, and information retrieval in one package, making it an essential addition to any Discord community.
  
 ## Technical Details:
 
 ### Dependencies:
 
 The bot relies on several Python libraries to function:
-- bot.py: For interacting with the Discord API
+- discord.py: For interacting with the Discord API
 - python-dotenv: For loading environment variables
 - matplotlib: For creating visualizations
 - forex-python: For currency conversion
@@ -107,12 +107,8 @@ TextBlob is employed for sentiment analysis, providing a simple yet effective wa
 The bot includes comprehensive error handling to manage various scenarios, ensuring stability and providing useful feedback.
 
 ## Getting Started
+[Detailed instructions on setting up the bot, including environment setup, token configuration, and deployment steps]
 
-1.) to run the Project :
-
-```
-python bot.py
-```
 ## Conclusion:
 
 This Discord bot represents a sophisticated blend of various Python libraries and APIs, creating a versatile tool that can significantly enhance any Discord server's functionality and user engagement.
