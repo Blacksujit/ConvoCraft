@@ -138,7 +138,12 @@ The bot includes comprehensive error handling to manage various scenarios, ensur
 
 ## Getting Started:
 
-[Detailed instructions on setting up the bot, including environment setup, token configuration, and deployment steps]
+*****Run the below command to start the bot:*****
+
+``` 
+python bot.py
+
+```
 
 ## Conclusion:
 
