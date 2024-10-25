@@ -1,1 +1,7 @@
+# Ignore .env file to prevent sensitive information from being pushed to GitHub
 .env
+
+# Make sure there are no spaces before or after the .env entry
+# Ensure this .gitignore file is committed and pushed to the repository
+# If the .env file was previously tracked, use: git rm --cached .env
+# Then commit the removal and push the changes
