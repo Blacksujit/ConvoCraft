@@ -94,7 +94,7 @@ Ideology: This feature provides accessible information to users, enhancing conve
 Implementation: Uses the qrcode library to create scannable QR codes, perfect for mobile sharing.
 Ideology: This addition allows quick content sharing among mobile users, fostering easier access to shared resources.***
 
-#### Reminder System (!reminder) ⏰:
+### Reminder System (!reminder) ⏰:
 
 ***Purpose: Enables users to set reminders within the chat, ideal for coordinating tasks or tracking events.
 Implementation: Leverages asyncio for efficient scheduling, notifying users when their reminder is due.
