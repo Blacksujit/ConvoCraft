@@ -2,6 +2,8 @@ import discord
 import os
 import time
 import random
+import matplotlib
+matplotlib.use('Agg')  # Set the backend to Agg
 import matplotlib.pyplot as plt
 import io
 import requests
@@ -16,20 +18,82 @@ from PIL import Image
 import numpy as np
 from datetime import datetime, timedelta
 import asyncio
+from transformers import pipeline
 
 # Load environment variables
 load_dotenv()
 
 # Directly load the Discord bot token
 DISCORD_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+HUGGING_FACE_TOKEN = os.getenv("HUGGING_FACE_ACCESS_TOKEN")
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
 if not DISCORD_TOKEN:
     raise ValueError("Discord bot token is not set")
+
+if not HUGGING_FACE_TOKEN:
+    raise ValueError("Hugging Face token is not set")
+
+if not ANTHROPIC_API_KEY:
+    raise ValueError("Anthropic API key is not set")
 
 # Initialize the bot
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
+
+# Initialize the Anthropic API client for Claude
+from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+
+anthropic = Anthropic(api_key=ANTHROPIC_API_KEY)
+
+# Initialize the Hugging Face pipeline
+qa_model = pipeline("question-answering", model="distilbert-base-cased-distilled-squad", token=HUGGING_FACE_TOKEN)
+
+# The qa_model will be used in the following scenarios:
+# 1. When a user invokes the !ask command with a question
+# 2. The model will attempt to answer general knowledge questions
+# 3. It will provide concise responses based on the given context
+# 4. The model will not generate new information, only extract answers from the provided context
+# 5. If the question is outside the model's knowledge or context, it will indicate that it cannot answer
+
+# Function to generate a response using Claude
+async def generate_response(prompt, max_tokens=100):
+    # Add rate limiting
+    if not hasattr(generate_response, 'last_call'):
+        generate_response.last_call = 0
+    
+    current_time = time.time()
+    if current_time - generate_response.last_call < 1:  # Limit to 1 request per second
+        await asyncio.sleep(1 - (current_time - generate_response.last_call))
+    
+    generate_response.last_call = time.time()
+    
+    # Add a daily limit
+    if not hasattr(generate_response, 'daily_count'):
+        generate_response.daily_count = 0
+        generate_response.last_reset = datetime.now().date()
+    
+    today = datetime.now().date()
+    if today > generate_response.last_reset:
+        generate_response.daily_count = 0
+        generate_response.last_reset = today
+    
+    if generate_response.daily_count >= 1000:  # Limit to 1000 requests per day
+        return "Daily limit reached. Please try again tomorrow."
+    
+    generate_response.daily_count += 1
+    
+    try:
+        response = await anthropic.completions.create(
+            model="claude-2",
+            prompt=f"{HUMAN_PROMPT} {prompt}{AI_PROMPT}",
+            max_tokens_to_sample=max_tokens
+        )
+        return response.completion.strip()
+    except Exception as e:
+        print(f"Error in generate_response: {e}")
+        return "An error occurred while generating the response."
 
 @bot.event
 async def on_ready():
@@ -50,11 +114,17 @@ async def visualize(ctx, *, prompt: str):
         # Create the visualization
         plt.figure(figsize=(10, 6))
         if chart_type == 'bar':
-            plt.bar(data.keys(), data.values())
+            plt.bar(list(data.keys()), list(data.values()))
         elif chart_type == 'line':
             plt.plot(list(data.keys()), list(data.values()))
         elif chart_type == 'pie':
-            plt.pie(data.values(), labels=data.keys(), autopct='%1.1f%%')
+            plt.pie(list(data.values()), labels=list(data.keys()), autopct='%1.1f%%')
+        elif chart_type == 'histogram':
+            plt.hist(list(data.values()), bins=len(data), edgecolor='black')
+        elif chart_type == 'scatter':
+            plt.scatter(list(data.keys()), list(data.values()))
+        elif chart_type == 'area':
+            plt.fill_between(list(data.keys()), list(data.values()), color='blue', alpha=0.3)
         else:
             await ctx.send("Unsupported chart type. Please use 'bar', 'line', or 'pie'.")
             return
@@ -101,6 +171,12 @@ def parse_prompt(prompt):
         chart_type = 'line'
     elif 'pie' in parts:
         chart_type = 'pie'
+    elif 'histogram' in parts:
+        chart_type = 'histogram'
+    elif 'scatter' in parts:
+        chart_type = 'scatter'
+    elif 'area' in parts:
+        chart_type = 'area'
 
     # Extract data from the prompt
     # This assumes a format like "apples:5 oranges:3 bananas:4"
@@ -149,7 +225,7 @@ async def roll(ctx, dice: str):
         await ctx.send("Format has to be in NdN!")
         return
 
-    results = [random.randint(1, limit) for r in range(rolls)]
+    results = [random.randint(1, limit) for _ in range(rolls)]
     await ctx.send(f"Rolling {dice}:\nResults: {', '.join(map(str, results))}\nSum: {sum(results)}")
 
 # New fancy commands
@@ -219,6 +295,10 @@ async def wiki(ctx, *, query: str):
     Usage: !wiki <query>
     Example: !wiki Python programming language
     """
+    if not query:
+        await ctx.send("Please provide a query. Usage: !wiki <query>")
+        return
+    
     try:
         summary = wikipedia.summary(query, sentences=3)
         await ctx.send(f"Wikipedia summary for '{query}':\n\n{summary}")
@@ -262,11 +342,38 @@ async def reminder(ctx, time: str, *, message: str):
         if duration:
             await ctx.send(f"Okay, I'll remind you to '{message}' in {time}.")
             await asyncio.sleep(duration)
-            await ctx.send(f"@{ctx.author.mention} Reminder: {message}")
+            await ctx.send(f"{ctx.author.mention} Reminder: {message}")
         else:
             await ctx.send("Invalid time format. Please use a combination of numbers and 's' (seconds), 'm' (minutes), or 'h' (hours).")
     except Exception as e:
         await ctx.send(f"An error occurred: {str(e)}")
+
+@bot.command(name="ask")
+async def ask_question(ctx, *, question: str):
+    """
+    Answers a question using the Hugging Face model.
+    Usage: !ask <question>
+    Example: !ask What is the capital of France?
+    """
+    try:
+        # Use a default context for general knowledge questions
+        context = "The model can answer general knowledge questions about various topics including history, science, geography, and more."
+        
+        result = qa_model(question=question, context=context)
+        answer = result['answer']
+        
+        # Check if the answer is empty, too short, or starts with "The model"
+        if not answer or len(answer) < 5 or answer.lower().startswith("the model"):
+            await ctx.send(f"I'm sorry, but I couldn't generate a meaningful answer to your question: '{question}'. Could you please rephrase or ask a different question?")
+        else:
+            await ctx.send(f"Question: {question}\nAnswer: {answer}")
+    except Exception as e:
+        await ctx.send(f"An error occurred while processing your question: {str(e)}")
+        print(f"Error in ask command: {str(e)}")  # Log the error for debugging
+
+    # Add a fallback response if the model fails to answer
+    if not answer or len(answer) < 5 or answer.lower().startswith("the model"):
+        await ctx.send("I apologize, but I'm having trouble answering your question at the moment. Please try again later or ask a different question.")
 
 def parse_time(time_str):
     total_seconds = 0
@@ -286,12 +393,13 @@ def parse_time(time_str):
     return total_seconds if total_seconds > 0 else None
 
 # Error handling for bot connection
-try:
-    bot.run(DISCORD_TOKEN)
-except discord.errors.LoginFailure:
-    print("Invalid Discord token. Please check your token.")
-except Exception as e:
-    print(f"An error occurred while running the bot: {e}")
+if __name__ == "__main__":
+    try:
+        bot.run(DISCORD_TOKEN)
+    except discord.errors.LoginFailure:
+        print("Invalid Discord token. Please check your token.")
+    except Exception as e:
+        print(f"An error occurred while running the bot: {e}")
 
 # Explanation of added fancy features:
 # 1. Currency conversion command using real-time exchange rates.
@@ -300,9 +408,13 @@ except Exception as e:
 # 4. Wikipedia summary command to fetch quick information on various topics.
 # 5. QR code generation command for easy sharing of links or text.
 # 6. Reminder command to set timed reminders for users.
-# The comment `# These additions provide more interactive and useful functionalities for users` is
-# providing a brief summary or explanation of the added fancy features in the Discord bot script. It
-# serves as a quick reference for anyone reading the code to understand the purpose of the new
-# commands and features that have been implemented to enhance the bot's functionality and user
-# experience.
+# 7. Question answering command using the Hugging Face model (distilbert-base-cased-distilled-squad).
 # These additions provide more interactive and useful functionalities for users.
+
+# PythonAnywhere deployment notes:
+# 1. Upload this script to your PythonAnywhere account.
+# 2. Install required packages using pip in a PythonAnywhere console.
+# 3. Set up environment variables in the PythonAnywhere dashboard.
+# 4. Create a new web app and point it to this script.
+# 5. Ensure the web app is set to manual reload and always on.
+# 6. Start the bot using the PythonAnywhere 'Run' button or via console.

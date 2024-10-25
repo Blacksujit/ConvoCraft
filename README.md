@@ -70,6 +70,13 @@ Ideology: Visuals play a crucial role in data interpretation, and this feature b
 ***Implementation: Utilizes forex-python to fetch current rates and perform conversions.***
 ***Ideology: With servers often hosting international members, this tool eases quick currency conversions for collaborative projects or discussions.***
 
+### Chatbot (!ask) 🤖: (An Anthropic Chatbot)
+
+***Purpose: Provides a chatbot interface for users to interact with, powered by Anthropic's API.***
+***Implementation: Utilizes the Anthropic API to generate responses to user queries.***
+***Ideology: This feature enhances conversational interactions within the server, offering a dynamic and responsive chatbot experience.***
+
+
 ### Sentiment Analysis (!sentiment) 📈:
 
 ***Purpose: Analyzes the sentiment behind messages, offering insights into community mood and discussions.
@@ -146,6 +153,11 @@ DISCORD_BOT_TOKEN=YOUR_BOT_TOKEN
 
 ```
 HUGGING_FACE_ACCESS_TOKEN=YOUR_HUGGING_FACE_ACCESS_TOKEN
+
+``` 
+
+```
+ANTHROPIC_API_KEY=YOUR_ANTHROPIC_API_KEY
 
 ``` 
 

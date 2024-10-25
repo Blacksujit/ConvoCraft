@@ -1,1 +1,1 @@
-!wiki Python programming language
+!ask What is the capital of France?
