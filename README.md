@@ -144,7 +144,7 @@ Benefit: Adds a new dimension to server interactions, potentially assisting in m
 
 ******Run the below commands to start the bot:******
 
-***create an `.env` file and add your bot token and hugging face access token:***
+***create an `.env` file at the root of the project directory  and add your bot token and hugging face access token:***
 
 ```
 DISCORD_BOT_TOKEN=YOUR_BOT_TOKEN
